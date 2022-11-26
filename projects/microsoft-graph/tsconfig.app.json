@@ -2,6 +2,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "angular-odata": ["../../submodules/angular-odata/projects/angular-odata/src/lib"]
+    },
     "outDir": "../../out-tsc/app",
     "types": []
   },
