@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start:microsoft-graph": "dotenv ng serve microsoft-graph",
+    "build:microsoft-graph": "dotenv ng build microsoft-graph",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
