@@ -1,0 +1,10 @@
+<h2>Users user</h2>
+<section>
+  <h3>List users</h3>
+  <p><button (click)="loadUsers()">Load</button></p>
+  <ng-container *ngIf="users$ !== undefined">
+    <div *ngIf="users$ | async as users">
+      <span *ngFor="let user of users">{{user.displayName}}</span>
+    </div>
+  </ng-container>
+</section>

@@ -1,21 +1,29 @@
 import { NgModule } from '@angular/core';
-import { AuthModule } from 'angular-auth-oidc-client';
-
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 @NgModule({
-    imports: [AuthModule.forRoot({
-        config: {
-              authority: 'https://login.microsoftonline.com/TENNANT_ID/v2.0/.well-known/openid-configuration',
-              redirectUrl: window.location.origin,
-              postLogoutRedirectUri: window.location.origin,
-              clientId: 'please-enter-clientId',
-              scope: 'please-enter-scopes', // 'openid profile offline_access ' + your scopes
-              responseType: 'code',
-              silentRenew: true,
-              useRefreshToken: true,
-              renewTimeBeforeTokenExpiresInSeconds: 30,
-          }
-      })],
-    exports: [AuthModule],
+  imports: [
+    AuthModule.forRoot({
+      config: {
+        authority: `https://login.microsoftonline.com/${TENANT_ID}/v2.0/`,
+        authWellknownEndpointUrl:  `https://login.microsoftonline.com/${TENANT_ID}/v2.0/`,
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: CLIENT_ID,
+        scope: 'openid email profile https://graph.microsoft.com/.default',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        autoUserInfo: false,
+        issValidationOff: true,
+        // Necessary for validating id token
+        maxIdTokenIatOffsetAllowedInSeconds: 600,
+        customParamsAuthRequest: {
+          prompt: 'select_account',
+        },
+      },
+    }),
+  ],
+  exports: [AuthModule],
 })
 export class AuthConfigModule {}
