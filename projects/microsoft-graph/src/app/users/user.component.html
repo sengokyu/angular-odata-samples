@@ -1,10 +1,31 @@
 <h2>Users user</h2>
 <section>
-  <h3>List users</h3>
-  <p><button (click)="loadUsers()">Load</button></p>
-  <ng-container *ngIf="users$ !== undefined">
-    <div *ngIf="users$ | async as users">
-      <span *ngFor="let user of users">{{user.displayName}}</span>
+  <h3>My profile</h3>
+  <p><button (click)="loadMyProfile()">Load</button></p>
+  <ng-container *ngIf="myProfile$ !== undefined">
+    <div *ngIf="myProfile$ | async as myProfile; else loading">
+      {{myProfile.displayName}}
     </div>
   </ng-container>
 </section>
+
+<section>
+  <h3>List user's display name (Required permission: User.Read.All)</h3>
+  <p><button (click)="loadUsers()">Load</button></p>
+  <ng-container *ngIf="users$ !== undefined">
+    <div *ngIf="users$ | async as users; else loading">
+      <button (click)="loadUser(user.id)" *ngFor="let user of users">{{user.displayName}}</button>
+    </div>
+  </ng-container>
+</section>
+
+<section>
+  <h3>Specific user</h3>
+  <ng-container *ngIf="user$ !== undefined">
+    <div *ngIf="user$ | async as user; else loading">
+      {{user.displayName}}
+    </div>
+  </ng-container>
+</section>
+
+<ng-template #loading>Loading ...</ng-template>

@@ -10,13 +10,37 @@ import { map } from 'rxjs/operators';
   styles: [],
 })
 export class UserComponent {
+  myProfile$?: Observable<User | null>;
   users$?: Observable<Array<User>>;
+  user$?: Observable<User | null>;
 
   constructor(private factory: ODataServiceFactory) {}
+
+  loadMyProfile(): void {
+    const service = this.factory.singleton<User>('me');
+
+    this.myProfile$ = service
+      .entity()
+      .query((q) => q.select(['displayName', 'id']))
+      .fetchEntity();
+  }
 
   loadUsers(): void {
     const service = this.factory.entitySet<User>('users');
 
-    this.users$ = service.fetchAll().pipe(map(({ entities }) => entities));
+    this.users$ = service
+      .entities()
+      .query((q) => q.select(['displayName', 'id']))
+      .fetchAll()
+      .pipe(map(({ entities }) => entities));
+  }
+
+  loadUser(id: string | undefined): void {
+    const service = this.factory.singleton<User>(`users/${id}`);
+
+    this.user$ = service
+      .entity()
+      .query((q) => q.select(['displayName']))
+      .fetchEntity();
   }
 }
