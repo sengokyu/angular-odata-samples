@@ -1,27 +1,31 @@
-# AngularOdataSamples
+# Angular OData samples
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
+Some sample projects of [Angular OData](https://www.npmjs.com/package/angular-odata).
 
-## Development server
+This contains:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Microsoft Graph OData
 
-## Code scaffolding
+## Running development server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Microsoft Graph OData
 
-## Build
+Edit .env file.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```console
+cp .env.microsoft-graph-sample .env
+vi .env
+```
 
-## Running unit tests
+You may see two variables.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **TENANT_ID** is ID of your Azure Active Directory
+- **CLIENT_ID** is ID of the Application what you created
 
-## Running end-to-end tests
+Start development server.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```console
+npm run start:microsoft-graph
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Open http://localhost:4200/
