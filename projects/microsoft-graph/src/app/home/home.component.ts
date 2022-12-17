@@ -1,10 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  userData$?: Observable<any>;
 
+  constructor(private oidcSecurityService: OidcSecurityService) {}
+
+  ngOnInit(): void {
+    this.userData$ = this.oidcSecurityService.getUserData();
+    console.log(this.userData$);
+  }
+
+  logoff(): void {
+    this.oidcSecurityService.logoff().subscribe(() => {});
+  }
 }

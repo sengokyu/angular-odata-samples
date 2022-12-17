@@ -3,27 +3,41 @@
   <h3>My profile</h3>
   <p><button (click)="loadMyProfile()">Load</button></p>
   <ng-container *ngIf="myProfile$ !== undefined">
-    <div *ngIf="myProfile$ | async as myProfile; else loading">
-      {{myProfile.displayName}}
-    </div>
+    <ul *ngIf="myProfile$ | async as myProfile; else loading">
+      <li>displayName: {{myProfile.displayName}}</li>
+      <li><a routerLink="/calendarView">📅</a></li>
+    </ul>
   </ng-container>
 </section>
+
+<ng-container *ngIf="user$ !== undefined">
+  <section>
+    <h3>User Info</h3>
+    <ul *ngIf="user$ | async as user; else loading">
+      <li>id: {{user.id}}</li>
+      <li>displayName: {{user.displayName}}</li>
+      <li>userPrincipalName: {{user.userPrincipalName}}</li>
+    </ul>
+  </section>
+  <section *ngIf="presence$ !== undefined">
+    <h4>Presence</h4>
+    <ul *ngIf="presence$|async as presence; else loading">
+      <li>activity: {{presence.activity}}</li>
+      <li>availability: {{presence.availability}}</li>
+    </ul>
+  </section>
+</ng-container>
 
 <section>
   <h3>List user's display name (Required permission: User.Read.All)</h3>
   <p><button (click)="loadUsers()">Load</button></p>
   <ng-container *ngIf="users$ !== undefined">
     <div *ngIf="users$ | async as users; else loading">
-      <button (click)="loadUser(user.id)" *ngFor="let user of users">{{user.displayName}}</button>
-    </div>
-  </ng-container>
-</section>
-
-<section>
-  <h3>Specific user</h3>
-  <ng-container *ngIf="user$ !== undefined">
-    <div *ngIf="user$ | async as user; else loading">
-      {{user.displayName}}
+      <div *ngFor="let user of users" class="user-item">
+        <button (click)="loadUser(user.id!)">Load</button>
+        <a routerLink="/schedule/{{user.mail}}">📅</a>
+        {{user.displayName}}
+      </div>
     </div>
   </ng-container>
 </section>

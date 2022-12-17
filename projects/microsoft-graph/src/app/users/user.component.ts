@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { ODataServiceFactory } from 'angular-odata';
-import { User } from 'microsoft-graph';
+import { Presence, User } from 'microsoft-graph';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styles: [],
+  styleUrls: ['./user.component.scss'],
 })
 export class UserComponent {
   myProfile$?: Observable<User | null>;
   users$?: Observable<Array<User>>;
   user$?: Observable<User | null>;
+  presence$?: Observable<Presence | null>;
 
   constructor(private factory: ODataServiceFactory) {}
 
@@ -30,17 +31,23 @@ export class UserComponent {
 
     this.users$ = service
       .entities()
-      .query((q) => q.select(['displayName', 'id']))
+      .query((q) => q.filter("userType eq 'Member'"))
+      .query((q) => q.select(['displayName', 'id', 'userType', 'mail']))
       .fetchAll()
       .pipe(map(({ entities }) => entities));
   }
 
-  loadUser(id: string | undefined): void {
+  loadUser(id: string): void {
     const service = this.factory.singleton<User>(`users/${id}`);
 
-    this.user$ = service
-      .entity()
-      .query((q) => q.select(['displayName']))
-      .fetchEntity();
+    this.user$ = service.entity().fetchEntity();
+
+    this.loadPresence(id);
+  }
+
+  loadPresence(id: string): void {
+    const service = this.factory.singleton<Presence>(`users/${id}/presence`);
+
+    this.presence$ = service.entity().fetchEntity();
   }
 }

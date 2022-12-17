@@ -1,0 +1,14 @@
+<p><a href="/home">home</a></p>
+<h2>Event of a day</h2>
+
+<p>
+    <button (click)="load()">load</button>
+</p>
+
+<ng-container *ngIf="events$ !== undefined">
+    <ul *ngIf="events$ | async as events; else loading">
+        <li *ngFor="let event of events">{{event.subject}}</li>
+    </ul>
+</ng-container>
+
+<ng-template #loading>Loading ...</ng-template>

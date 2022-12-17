@@ -1,0 +1,16 @@
+<p><a href="/home">home</a></p>
+<h2>Schedule</h2>
+
+<p>
+    <button (click)="load()">load</button>
+</p>
+
+<ng-container *ngIf="schedules$ !== undefined">
+    <ul *ngIf="schedules$ | async as schedules; else loading">
+        <ng-container *ngFor="let schedule of schedules">
+            <li *ngFor="let scheduleItem of schedule.scheduleItems">{{scheduleItem.subject}}</li>
+        </ng-container>
+    </ul>
+</ng-container>
+
+<ng-template #loading>Loading ...</ng-template>

@@ -1,1 +1,13 @@
+<p>
+    <button (click)="logoff()">Logoff</button>
+</p>
+<div *ngIf="userData$ !== undefined">
+    <ul *ngIf="userData$ | async as userData">
+        <li>iss: {{userData.iss}}</li>
+        <li>email: {{userData.email}}</li>
+        <li>name: {{userData.name}}</li>
+        <li>preferred_username: {{userData.preferred_username}}</li>
+        <li>ver: {{userData.ver}}</li>
+    </ul>
+</div>
 <app-user></app-user>
